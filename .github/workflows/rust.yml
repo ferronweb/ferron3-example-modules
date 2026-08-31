@@ -21,7 +21,7 @@ jobs:
         run: cargo test --workspace --verbose
 
       - name: Build fixture
-        run: cargo build -p ferron-example-fixture --verbose
+        run: cd fixture && cargo build -p ferron-example-fixture --verbose
 
   check:
     runs-on: ubuntu-latest
