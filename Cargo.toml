@@ -1,0 +1,24 @@
+[workspace]
+resolver = "2"
+members = [
+    "modules/*",
+]
+exclude = [
+    "e2e",
+    "fixture",
+]
+
+# This workspace is published as https://github.com/ferronweb/ferron3-example-modules.
+# Each example crate depends on Ferron via git (branch = "3.x") so that
+# `cargo build` fetches the upstream API directly. When this repository is
+# checked out inside the main Ferron monorepo for local development, you can
+# optionally add a patch to use the local checkout offline:
+#
+#   [patch."https://github.com/ferronweb/ferron"]
+#   ferron-core = { path = "../core" }
+#   ferron-http = { path = "../types/http" }
+#   ferron-observability = { path = "../types/observability" }
+#   ferron-tls = { path = "../types/tls" }
+#   ferron-dns = { path = "../types/dns" }
+#   ferron-ocsp = { path = "../types/ocsp" }
+#   ferron-entrypoint = { path = "../entrypoint" }

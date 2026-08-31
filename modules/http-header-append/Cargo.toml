@@ -1,0 +1,24 @@
+[package]
+name = "ferron-http-header-append"
+version = "0.1.0"
+edition = "2021"
+description = "Example Ferron HTTP stage that appends a configurable response header (ferron-http-header-append)."
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+async-trait = "0.1"
+http = "1"
+http-body-util = "0.1"
+bytes = "1"
+tokio = { version = "1", features = ["rt", "macros"] }
+typemap_rev = "0.4"
+
+ferron-core = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+ferron-http = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+ferron-observability = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+
+[dev-dependencies]
+rustc-hash = "2"
+tokio = { version = "1", features = ["rt", "macros"] }
+bytes = "1"
+http-body-util = "0.1"

@@ -1,0 +1,13 @@
+[package]
+name = "ferron-logformat-csv"
+version = "0.1.0"
+edition = "2021"
+description = "Example Ferron log formatter that outputs CSV (ferron-logformat-csv)."
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+ferron-core = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+ferron-observability = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+
+[dev-dependencies]
+rustc-hash = "2"

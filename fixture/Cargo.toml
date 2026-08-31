@@ -1,0 +1,27 @@
+[package]
+name = "ferron-example-fixture"
+version = "0.1.0"
+edition = "2021"
+description = "Fixture binary that wires all example modules into a Ferron server for manual testing."
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+# Ferron entrypoint from the upstream repository (3.x branch).
+# When this repository is cloned standalone, Cargo fetches it from GitHub.
+# When it lives inside the Ferron monorepo, the workspace patch in the parent
+# Cargo.toml redirects this to the local checkout (offline, no network).
+ferron-entrypoint = { git = "https://github.com/ferronweb/ferron", branch = "3.x", features = ["profile-default"] }
+
+# Example modules from this workspace (used via path for local development).
+ferron-http-header-append = { path = "../modules/http-header-append" }
+ferron-http-hello = { path = "../modules/http-hello" }
+ferron-echo-server = { path = "../modules/echo-server" }
+ferron-observability-memory = { path = "../modules/observability-memory" }
+ferron-tls-selfsigned = { path = "../modules/tls-selfsigned" }
+ferron-dns-memory = { path = "../modules/dns-memory" }
+ferron-config-toml = { path = "../modules/config-toml" }
+ferron-logformat-csv = { path = "../modules/logformat-csv" }
+
+
+# When published, the patch in the parent workspace is not used. The `git`
+# sources above are the canonical references to the upstream Ferron 3.x branch.

@@ -1,0 +1,25 @@
+[package]
+name = "e2e-example"
+version = "0.1.0"
+edition = "2021"
+description = "End-to-end tests for Ferron 3 example modules (testcontainers)."
+publish = false
+
+[[test]]
+name = "http_examples"
+path = "tests/http_examples.rs"
+
+[[test]]
+name = "echo_server"
+path = "tests/echo_server.rs"
+
+# This crate is excluded from the workspace in the parent Cargo.toml so
+# that `cargo test --workspace` in the workspace does not run the E2E tests
+# (they require Docker and a built image).
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls-manifest-path"] }
+testcontainers = { version = "0.15", features = [] }
+futures-util = "0.3"
+tempfile = "3"

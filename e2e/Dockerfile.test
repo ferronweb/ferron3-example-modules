@@ -1,0 +1,46 @@
+# Build stage: compile the fixture binary with example modules
+FROM --platform=$BUILDPLATFORM rust:trixie AS builder
+
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+
+RUN --mount=type=cache,sharing=private,target=/var/cache/apt \
+    --mount=type=cache,sharing=private,target=/var/lib/apt \
+    --mount=type=cache,sharing=private,target=/usr/local/cargo/git \
+    --mount=type=cache,sharing=private,target=/usr/local/cargo/registry \
+    apt update && \
+    apt install -y cmake clang libclang-dev && \
+    cargo install bindgen-cli || true
+
+WORKDIR /usr/src/ferron-example
+
+# Copy workspace manifests first for layer caching
+COPY Cargo.toml ./
+COPY modules ./modules
+COPY fixture ./fixture
+
+# Build the fixture (debug is fast enough for E2E, use --release for prod)
+RUN --mount=type=cache,sharing=private,target=/usr/local/cargo/git \
+    --mount=type=cache,sharing=private,target=/usr/local/cargo/registry \
+    --mount=type=cache,sharing=private,target=/usr/src/ferron-example/target \
+    cargo build -p ferron-example-fixture && \
+    mkdir -p .dist && cp target/debug/ferron-example-fixture .dist/ferron
+
+# Runtime stage: minimal Debian with Ferron
+FROM debian:trixie
+
+RUN --mount=type=cache,sharing=private,target=/var/cache/apt \
+    --mount=type=cache,sharing=private,target=/var/lib/apt \
+    apt update && \
+    apt install -y ca-certificates curl && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /usr/src/ferron-example/.dist/ferron /usr/sbin/ferron
+
+# Provide a default config that uses the example modules
+COPY configs/ferron.conf /etc/ferron.conf
+COPY wwwroot /var/www/ferron/
+
+EXPOSE 80 9090
+
+CMD ["/usr/sbin/ferron", "run", "-c", "/etc/ferron.conf"]

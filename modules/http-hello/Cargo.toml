@@ -1,0 +1,23 @@
+[package]
+name = "ferron-http-hello"
+version = "0.1.0"
+edition = "2021"
+description = "Example Ferron HTTP stage that serves a hello message for /hello (ferron-http-hello)."
+license = "MIT OR Apache-2.0"
+
+[dependencies]
+async-trait = "0.1"
+http = "1"
+http-body-util = "0.1"
+bytes = "1"
+tokio = { version = "1", features = ["rt", "macros"] }
+
+ferron-core = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+ferron-http = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+ferron-observability = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
+
+[dev-dependencies]
+rustc-hash = "2"
+tokio = { version = "1", features = ["rt", "macros"] }
+bytes = "1"
+http-body-util = "0.1"
