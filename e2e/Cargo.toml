@@ -17,9 +17,15 @@ path = "tests/echo_server.rs"
 # that `cargo test --workspace` in the workspace does not run the E2E tests
 # (they require Docker and a built image).
 
+[target.'cfg(unix)'.dev-dependencies]
+nix = { version = "0.31.2", features = ["fs"] }
+
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.13", default-features = false, features = ["rustls"] }
-testcontainers = { version = "0.28", features = ["http_wait"] }
+reqwest = { version = "0.13.2", default-features = false, features = ["http2", "rustls-no-provider", "cookies"] }
+testcontainers = { version = "0.28.0", features = ["http_wait_plain", "reusable-containers"] }
 futures-util = "0.3"
 tempfile = "3"
+glob = "0.3"
+http = "1"
+rustls = { version = "0.23", features = ["ring"] }
