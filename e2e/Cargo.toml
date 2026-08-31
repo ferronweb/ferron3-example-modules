@@ -19,7 +19,7 @@ path = "tests/echo_server.rs"
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
-reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"] }
-testcontainers = { version = "0.15", features = [] }
+reqwest = { version = "0.13", default-features = false, features = ["rustls"] }
+testcontainers = { version = "0.28", features = [] }
 futures-util = "0.3"
 tempfile = "3"
