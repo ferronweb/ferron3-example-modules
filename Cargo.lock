@@ -507,7 +507,6 @@ dependencies = [
  "notify",
  "notify-debouncer-mini",
  "rustc-hash",
- "serde",
  "serde_json",
  "tempfile",
  "tokio",
@@ -559,7 +558,6 @@ dependencies = [
 name = "ferron-echo-server"
 version = "0.1.0"
 dependencies = [
- "async-trait",
  "ferron-core",
  "rustc-hash",
  "tokio",
@@ -646,7 +644,6 @@ dependencies = [
  "ferron-core",
  "ferron-observability",
  "rustc-hash",
- "tokio",
 ]
 
 [[package]]
@@ -678,8 +675,6 @@ dependencies = [
  "rustc-hash",
  "rustls",
  "rustls-pki-types",
- "tokio",
- "tokio-rustls",
 ]
 
 [[package]]

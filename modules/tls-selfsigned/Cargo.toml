@@ -7,11 +7,9 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 async-trait = "0.1"
-tokio = { version = "1", features = ["rt"] }
 rcgen = "0.14"
 rustls = { version = "0.23", default-features = false, features = ["std", "tls12", "aws_lc_rs"] }
 rustls-pki-types = "1"
-tokio-rustls = { version = "0.26", default-features = false }
 
 ferron-core = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
 ferron-tls = { git = "https://github.com/ferronweb/ferron", branch = "3.x" }
