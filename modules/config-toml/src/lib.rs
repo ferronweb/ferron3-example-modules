@@ -85,12 +85,10 @@ impl ConfigurationAdapter for TomlConfigurationAdapter {
         // Parse as TOML to validate syntax. We use `toml::Value` as a generic
         // container. A real adapter would map this into `ServerConfiguration`.
         let toml_value: toml::Value =
-            contents
-                .parse()
-                .map_err(|e: toml::de::Error| ConfigurationAdapterError {
-                    inner: anyhow::anyhow!("Failed to parse TOML: {e}").into_boxed_dyn_error(),
-                    span: None,
-                })?;
+            toml::from_str(&contents).map_err(|e: toml::de::Error| ConfigurationAdapterError {
+                inner: anyhow::anyhow!("Failed to parse TOML: {e}").into_boxed_dyn_error(),
+                span: None,
+            })?;
 
         // For this example, we simply log the parsed keys and produce an
         // *empty* but valid configuration. An empty config will fail validation
