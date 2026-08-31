@@ -7,21 +7,24 @@
 //! `ferron-http-header-append` and `ferron-http-hello`.
 
 use std::time::Duration;
-use testcontainers::GenericImage;
+use testcontainers::core::wait::HttpWaitStrategy;
 use testcontainers::core::{ContainerPort, WaitFor};
+use testcontainers::runners::AsyncRunner;
+use testcontainers::{ContainerAsync, GenericImage, ImageExt, TestcontainersError};
 
 const FERRON_IMAGE: &str = "e2e-test-ferron-example:latest";
 
-fn ferron_image() -> GenericImage {
+async fn ferron_container() -> Result<ContainerAsync<GenericImage>, TestcontainersError> {
     GenericImage::new(FERRON_IMAGE, "latest")
         .with_exposed_port(ContainerPort::Tcp(80))
         .with_wait_for(WaitFor::http(
-            "/",
-            ContainerPort::Tcp(80),
-            http::Method::GET,
-            200..400,
+            HttpWaitStrategy::new("/")
+                .with_port(ContainerPort::Tcp(80))
+                .with_response_matcher(|r| r.status().is_success() || r.status().is_redirection()),
         ))
         .with_startup_timeout(Duration::from_secs(30))
+        .start()
+        .await
 }
 
 /// Helper to run async test with tokio runtime.
@@ -40,8 +43,7 @@ async fn hello_stage_returns_greeting() {
     // The actual implementation would look like:
     //
     // ```ignore
-    // let container = testcontainers::clients::Cli::default()
-    //     .run(ferron_image());
+    // let container = ferron_container().await;
     // let port = container.get_host_port_ipv4(80);
     // let url = format!("http://127.0.0.1:{port}/hello");
     // let resp = reqwest::get(&url).await.unwrap();
@@ -50,7 +52,7 @@ async fn hello_stage_returns_greeting() {
     // ```
     //
     // For now we assert the helper builds correctly.
-    let _img = ferron_image();
+    let _c = ferron_container();
 }
 
 #[tokio::test]
@@ -62,5 +64,5 @@ async fn header_append_stage_adds_header() {
     // let resp = reqwest::get(&format!("http://127.0.0.1:{port}/")).await.unwrap();
     // assert_eq!(resp.headers().get("x-example-header").unwrap(), "example");
     // ```
-    let _img = ferron_image();
+    let _c = ferron_container().await;
 }
