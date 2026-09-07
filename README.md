@@ -25,16 +25,16 @@ cargo run -p ferron-example-fixture -- directives | jq .
 
 ## Modules
 
-| Crate | Kind | Directive |
-| --- | --- | --- |
-| `ferron-http-header-append` | HTTP stage | `example_header <value>` |
-| `ferron-http-hello` | HTTP stage | `hello_path`, `hello_message` |
-| `ferron-echo-server` | Custom server | `echo_server { listen <addr> }` |
+| Crate                         | Kind               | Directive                                                      |
+| ----------------------------- | ------------------ | -------------------------------------------------------------- |
+| `ferron-http-header-append`   | HTTP stage         | `example_header <value>`                                       |
+| `ferron-http-hello`           | HTTP stage         | `hello_path`, `hello_message`                                  |
+| `ferron-echo-server`          | Custom server      | `echo_server { listen <addr> }`                                |
 | `ferron-observability-memory` | Observability sink | `observability { provider memory; memory { max_events <n> } }` |
-| `ferron-tls-selfsigned` | TLS provider | `tls { provider selfsigned; selfsigned { days <n> } }` |
-| `ferron-dns-memory` | DNS provider | `dns memory` (ACME `dns memory`) |
-| `ferron-config-toml` | Config adapter | `--config-adapter toml --config-params file=...` |
-| `ferron-logformat-csv` | Log formatter | `format csv` + `csv { fields ... }` |
+| `ferron-tls-selfsigned`       | TLS provider       | `tls { provider selfsigned; selfsigned { days <n> } }`         |
+| `ferron-dns-memory`           | DNS provider       | `dns memory` (ACME `dns memory`)                               |
+| `ferron-config-toml`          | Config adapter     | `--config-adapter toml --config-params file=...`               |
+| `ferron-logformat-csv`        | Log formatter      | `format csv` + `csv { fields ... }`                            |
 
 See the `docs/` folder for detailed configuration documentation and each
 `modules/*/src/lib.rs` for inline code comments.
@@ -43,7 +43,7 @@ See the `docs/` folder for detailed configuration documentation and each
 
 Upstream Ferron module development guide lives in the main repository:
 
-- https://github.com/ferronweb/ferron/blob/3.x/docs/module-development/
+- https://github.com/ferronweb/ferron/blob/3.x/docs/module-development/ (or https://ferron.sh/docs/module-development)
 - `cargo doc --no-deps` on `3.x` for `ferron-core` and `types/*`.
 
 Local docs for this repo:
