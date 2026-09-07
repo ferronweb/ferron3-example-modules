@@ -50,7 +50,6 @@ Local docs for this repo:
 
 - `docs/overview.md` — what each example does
 - `docs/directives.md` — configuration reference
-- `AGENTS.md` — guidance for AI agents
 
 ## Testing
 
